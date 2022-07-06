@@ -9,11 +9,6 @@ import {
     Spacer,
 } from '@chakra-ui/react';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
-import {
-    isMobile,
-    useDeviceData,
-    useMobileOrientation,
-} from 'react-device-detect';
 import { BeatLoader } from 'react-spinners';
 import ApodType from '../utils/ApodType';
 import PostVertical from './post';
