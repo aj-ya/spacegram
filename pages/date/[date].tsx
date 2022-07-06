@@ -16,14 +16,27 @@ import PostVertical from '../../components/post';
 import ApodType from '../../utils/ApodType';
 import NextLink from 'next/link';
 import { BeatLoader } from 'react-spinners';
+import { NextPage } from 'next';
 
-const SingleDay = (props: ApodType) => {
-    const [apod, setApod] = useState(props);
+const SingleDay: NextPage = () => {
+    const [apod, setApod] = useState<ApodType>();
     const [allLikes, setAllLikes] = useState<Set<string>>(new Set<string>());
     useEffect(() => {
+        setLoading(true);
         const localLikes = localStorage.getItem('likes') || '[]';
         setAllLikes(new Set(JSON.parse(localLikes)));
         console.log(allLikes);
+        async function initLoad() {
+            await fetch(
+                `https://api.nasa.gov/planetary/apod?api_key=PwdzyE2LAUSIQUpIqbDxUhHA18CHXrIVFwW7C2Oa&date=${dateRef.current.value}&thumbs=true`
+            )
+                .then((res) => res.json())
+                .then((res) => {
+                    setApod(res);
+                });
+        }
+        initLoad();
+        setLoading(false);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -38,7 +51,7 @@ const SingleDay = (props: ApodType) => {
     const handleDateChange = async () => {
         setLoading(true);
         await fetch(
-            `/api/posts?start_date=${dateRef.current.value}&end_date=${dateRef.current.value}`
+            `https://api.nasa.gov/planetary/apod?api_key=PwdzyE2LAUSIQUpIqbDxUhHA18CHXrIVFwW7C2Oa&date=${dateRef.current.value}&thumbs=true`
         )
             .then((res) => res.json())
             .then((res) => {
@@ -80,7 +93,15 @@ const SingleDay = (props: ApodType) => {
                         <BeatLoader size={8} color="grey" />
                     ) : (
                         <PostVertical
-                            apod={apod}
+                            apod={
+                                apod || {
+                                    date: '2022-07-06',
+                                    explanation:
+                                        "Our sky is alive with the streams of stars.  The motions of 26 million Milky Way stars are evident in the featured map constructed from recent data taken by ESA's Gaia satellite. Stars colored blue are moving toward us, while red indicates away. Lines depict the motion of the stars across the sky.",
+                                    title: 'Milky Way Motion in 3D from Gaia',
+                                    url: 'https://apod.nasa.gov/apod/image/2207/MilkyWayMotion_Gaia_1080.jpg',
+                                }
+                            }
                             likes={allLikes}
                             handlePostInteraction={handlePostInteraction}
                         />
