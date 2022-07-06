@@ -9,7 +9,20 @@ import {
     Spacer,
     Stack,
 } from '@chakra-ui/react';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import {
+    Dispatch,
+    MutableRefObject,
+    SetStateAction,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
+import {
+    isMobile,
+    useDeviceData,
+    useMobileOrientation,
+} from 'react-device-detect';
+import { BeatLoader } from 'react-spinners';
 import ApodType from '../utils/ApodType';
 import PostVertical from './post';
 
@@ -35,51 +48,63 @@ const Feed = ({
         else userLikes.delete(date);
         setUserLikes(userLikes);
     };
-    const fromRef = useRef() as React.MutableRefObject<HTMLInputElement>;
-    const toRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+    const fromRef = useRef() as MutableRefObject<HTMLInputElement>;
+    const toRef = useRef() as MutableRefObject<HTMLInputElement>;
     const today = new Date();
     const todayStr = today.toISOString().substring(0, 10);
-    const tenDaysAgoStr = new Date(today.getTime() - 24 * 60 * 60 * 1000 * 10)
+    const elevenDaysAgoStr = new Date(
+        today.getTime() - 24 * 60 * 60 * 1000 * 11
+    )
         .toISOString()
         .substring(0, 10);
     const handleDateChange = async () => {
         const start_date = fromRef.current.value;
         const end_date = toRef.current.value;
         console.log(start_date, end_date);
-        await fetch(
-            `https://api.nasa.gov/planetary/apod?api_key=PwdzyE2LAUSIQUpIqbDxUhHA18CHXrIVFwW7C2Oa&start_date=${start_date}&end_date=${end_date}&thumbs=true`
-        )
+        setLoading(true);
+        await fetch(`/api/posts?start_date=${start_date}&end_date=${end_date}`)
             .then((res) => res.json())
             .then((res) => {
                 setApods(res);
             });
+        setLoading(false);
     };
     const [apods, setApods] = useState([]);
+    const [isLoading, setLoading] = useState(true);
     useEffect(() => {
         const initLoad = async () => {
+            setLoading(true);
             await fetch(
-                `https://api.nasa.gov/planetary/apod?api_key=PwdzyE2LAUSIQUpIqbDxUhHA18CHXrIVFwW7C2Oa&start_date=${tenDaysAgoStr}&end_date=${todayStr}&thumbs=true`
+                `/api/posts?start_date=${elevenDaysAgoStr}&end_date=${todayStr}`
             )
                 .then((res) => res.json())
                 .then((res) => {
                     setApods(res);
+                    setLoading(false);
                 });
         };
         initLoad();
-    }, [todayStr, tenDaysAgoStr]);
-
+    }, [todayStr, elevenDaysAgoStr]);
     const [minToDate, setMinToDate] = useState('2020-01-01');
     return (
         <Box width="100%">
             <Center>
-                <Stack direction={'row'}>
-                    <InputGroup>
+                <Flex
+                    direction="row"
+                    wrap="wrap"
+                    width="500px"
+                    maxWidth="500px"
+                    alignContent="center"
+                    justifyContent="center"
+                    gap="15px"
+                >
+                    <InputGroup width={'240px'}>
                         <InputLeftAddon children="From" width="70px" />
                         <Input
                             ref={fromRef}
                             type="date"
-                            defaultValue={tenDaysAgoStr}
-                            min="2022-01-01"
+                            defaultValue={elevenDaysAgoStr}
+                            min="1995-07-01"
                             onChange={(e) => {
                                 setMinToDate(e.target.value);
                                 handleDateChange();
@@ -87,7 +112,7 @@ const Feed = ({
                             max={todayStr}
                         />
                     </InputGroup>
-                    <InputGroup>
+                    <InputGroup width={'240px'}>
                         <InputLeftAddon children="To" width="70px" />
                         <Input
                             ref={toRef}
@@ -98,7 +123,7 @@ const Feed = ({
                             onChange={handleDateChange}
                         />
                     </InputGroup>
-                </Stack>
+                </Flex>
             </Center>
             <Spacer height="50px" />
             <Flex
@@ -109,7 +134,11 @@ const Feed = ({
                 alignContent="space-between"
                 justifyContent="space-around"
             >
-                {MapPosts(apods)}
+                {isLoading ? (
+                    <BeatLoader size={8} color="grey" />
+                ) : (
+                    MapPosts(apods)
+                )}
             </Flex>
         </Box>
     );

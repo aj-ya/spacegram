@@ -27,6 +27,7 @@ const LikeButton = ({
             height="30px"
             colorScheme="red"
             variant="outline"
+            transition="0.3s ease-in-out"
         >
             Unlike
         </Button>
@@ -38,6 +39,7 @@ const LikeButton = ({
             width="90px"
             height="30px"
             variant="outline"
+            transition="0.3s ease-in-out"
         >
             Like
         </Button>

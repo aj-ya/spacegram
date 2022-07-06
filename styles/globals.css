@@ -14,16 +14,23 @@ a {
 * {
     box-sizing: border-box;
 }
-.container {
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-    scrollbar-width: none; /* Firefox */
-    text-overflow: ellipsis;
+/* .container {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
 }
 .container::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
-}
+  display: none; 
+}  */
 
-.loading {
-    background: white url('/loading.gif') center no-repeat;
-    background-image: '/loading.gif';
+main {
+    min-height: calc(100vh - 60px);
+    padding: 2rem 0;
+}
+footer {
+    display: flex;
+    flex: 1;
+    height: 60px;
+    border-top: 1px solid #eaeaea;
+    justify-content: center;
+    align-items: center;
 }
