@@ -10,7 +10,8 @@
         "format:check": "prettier --check  \"components/**/*.{js,jsx,ts,tsx}\" \"pages/**/*.{js,jsx,ts,tsx}\"",
         "test": "echo \"Error: no test specified\" && exit 1",
         "lint": "eslint   \"components/**/*.{js,jsx,ts,tsx}\" \"pages/**/*.{js,jsx,ts,tsx}\"",
-        "lint:quiet": "eslint   \"components/**/*.{js,jsx,ts,tsx}\" \"pages/**/*.{js,jsx,ts,tsx}\"  --quiet"
+        "lint:quiet": "eslint   \"components/**/*.{js,jsx,ts,tsx}\" \"pages/**/*.{js,jsx,ts,tsx}\"  --quiet",
+        "export": "next export"
     },
     "dependencies": {
         "@chakra-ui/icons": "^2.0.2",

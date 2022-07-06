@@ -4,6 +4,7 @@ const nextConfig = {
     images: {
         domains: ['bit.ly'],
     },
+    assetPrefix: './',
 };
 
 module.exports = nextConfig;
