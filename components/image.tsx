@@ -1,5 +1,5 @@
 import { Box, Center, Image, Spinner } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 const FallbackImage = () => {
     return (
         <Box width="lg" height="400" className="jd">

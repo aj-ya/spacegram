@@ -1,7 +1,6 @@
 import { Button } from '@chakra-ui/react';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import handler from '../pages/api/hello';
 const LikeButton = ({
     postid,
     handlePostInteraction,
@@ -18,7 +17,7 @@ const LikeButton = ({
     };
     useEffect(() => {
         handlePostInteraction(postid, like);
-    }, [like]);
+    }, [handlePostInteraction, like, postid]);
     return like ? (
         <Button
             onClick={toggleLike}

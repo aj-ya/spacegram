@@ -1,5 +1,4 @@
 /* eslint-disable react/no-children-prop */
-import { ArrowBackIcon } from '@chakra-ui/icons';
 import {
     Box,
     Center,
@@ -26,6 +25,7 @@ const SingleDay = (props: ApodType) => {
         const localLikes = localStorage.getItem('likes') || '[]';
         setAllLikes(new Set(JSON.parse(localLikes)));
         console.log(allLikes);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handlePostInteraction = (date: string, like: boolean) => {

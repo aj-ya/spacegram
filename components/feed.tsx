@@ -7,16 +7,8 @@ import {
     InputGroup,
     InputLeftAddon,
     Spacer,
-    Stack,
 } from '@chakra-ui/react';
-import {
-    Dispatch,
-    MutableRefObject,
-    SetStateAction,
-    useEffect,
-    useRef,
-    useState,
-} from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import {
     isMobile,
     useDeviceData,

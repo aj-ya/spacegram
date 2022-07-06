@@ -1,6 +1,4 @@
-import { Box, Center, Image, Spacer, Stack, Text } from '@chakra-ui/react';
-import { Dispatch, SetStateAction } from 'react';
-
+import { Box, Center, Spacer, Stack, Text } from '@chakra-ui/react';
 import ApodType from '../utils/ApodType';
 import PostImage from './image';
 import LikeButton from './likeButton';
