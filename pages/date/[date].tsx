@@ -13,7 +13,6 @@ import {
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { AiOutlineHome } from 'react-icons/ai';
 import PostVertical from '../../components/post';
-import api_key from '../../utils/api_key';
 import ApodType from '../../utils/ApodType';
 import NextLink from 'next/link';
 import { BeatLoader } from 'react-spinners';
@@ -91,19 +90,19 @@ const SingleDay = (props: ApodType) => {
         </main>
     );
 };
-export async function getServerSideProps({
-    query,
-}: {
-    query: { date: string };
-}) {
-    let { date } = query || '';
-    const datePattern = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/;
-    if (!datePattern.test(date as string)) {
-        date = new Date().toISOString().substring(0, 10);
-    }
-    const apod = await fetch(
-        `https://api.nasa.gov/planetary/apod?api_key=${api_key}&date=${date}&thumbs=true`
-    ).then((res) => res.json());
-    return { props: await apod };
-}
+// export async function getServerSideProps({
+//     query,
+// }: {
+//     query: { date: string };
+// }) {
+//     let { date } = query || '';
+//     const datePattern = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/;
+//     if (!datePattern.test(date as string)) {
+//         date = new Date().toISOString().substring(0, 10);
+//     }
+//     const apod = await fetch(
+//         `https://api.nasa.gov/planetary/apod?api_key=${api_key}&date=${date}&thumbs=true`
+//     ).then((res) => res.json());
+//     return { props: await apod };
+// }
 export default SingleDay;
