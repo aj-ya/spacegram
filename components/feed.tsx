@@ -49,7 +49,9 @@ const Feed = ({
         const end_date = toRef.current.value;
         console.log(start_date, end_date);
         setLoading(true);
-        await fetch(`/api/posts?start_date=${start_date}&end_date=${end_date}`)
+        await fetch(
+            `https://api.nasa.gov/planetary/apod?api_key=PwdzyE2LAUSIQUpIqbDxUhHA18CHXrIVFwW7C2Oa&start_date=${start_date}&end_date=${end_date}`
+        )
             .then((res) => res.json())
             .then((res) => {
                 setApods(res);
@@ -62,7 +64,7 @@ const Feed = ({
         const initLoad = async () => {
             setLoading(true);
             await fetch(
-                `/api/posts?start_date=${elevenDaysAgoStr}&end_date=${todayStr}`
+                `https://api.nasa.gov/planetary/apod?api_key=PwdzyE2LAUSIQUpIqbDxUhHA18CHXrIVFwW7C2Oa&start_date=${elevenDaysAgoStr}&end_date=${todayStr}`
             )
                 .then((res) => res.json())
                 .then((res) => {
