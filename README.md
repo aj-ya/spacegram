@@ -6,3 +6,6 @@ A gallery of space pictures.
 -   NASA APOD API
 -   NextJS
 -   ChakraUI
+
+
+made for a take home assignment.
